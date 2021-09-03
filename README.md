@@ -36,7 +36,7 @@ Options:
 |Host|Argument|
 | --- | --- |
 |[anonfiles](https://anonfiles.com/)|anonfiles
-|[catbox](https://catbox.moe/)|catbox
+|[Catbox](https://catbox.moe/)|catbox
 |[file.io](https://www.file.io/)|fileio
 |[Filemail](https://www.filemail.com/)|filemail
 |FTP|ftp

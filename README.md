@@ -23,7 +23,7 @@ Options:
   --wipe, -w             Wipe output text file on startup.
   --files FILES, -f FILES
                          Paths of files to upload.
-  --private, -P          *Make upload private.
+  --private, -P          *Set upload as private.
   --template TEMPLATE, -t TEMPLATE
                          Output text file template. Vars: filename, filepath, fileUrl [default: # {{.filename}}\n{{.fileUrl}}]
   --overwrite, -O        *Overwrite file on host if it already exists.

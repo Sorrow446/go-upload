@@ -36,6 +36,16 @@ Options:
 ```
 \* = Not supported for all hosts.
 
+### Template
+
+Default: `# {{.filename}}\n{{.fileUrl}}\n`    
+Output with the default template:
+```
+# 2.jpg
+https://anonfiles.com/Hde2H4F5ue/2_jpg
+```
+Args: filename, filepath, fileurl
+
 ## Supported hosts
 |Host|Argument|
 | --- | --- |

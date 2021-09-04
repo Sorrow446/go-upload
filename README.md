@@ -27,9 +27,7 @@ Options:
                          Paths of files to upload.
   --private, -P          *Set upload as private.
   --template TEMPLATE, -t TEMPLATE
-                         Output text file template. Vars: filename, filepath, fileUrl [default: # {{.filename}}
-{{.fileUrl}}
-]
+                         Output text file template. Vars: filename, filepath, fileUrl [default: # {{.filename}}\n{{.fileUrl}}]
   --overwrite, -O        *Overwrite file on host if it already exists.
   --user USER, -U USER   *User form for FTP. Folders will be created recursively if they don't already exist.
   --help, -h             display this help and exit
@@ -44,7 +42,7 @@ Output with the default template:
 # 2.jpg
 https://anonfiles.com/Hde2H4F5ue/2_jpg
 ```
-Args: filename, filepath, fileurl
+Args: filename, filepath, fileUrl
 
 ## Supported hosts
 |Host|Argument|

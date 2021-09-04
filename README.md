@@ -1,5 +1,7 @@
 # go-upload
 File uploader with support for multiple hosts and progress reporting written in Go.
+![](https://i.imgur.com/mPKo3me.jpg)
+[Windows, Linux, macOS and Android binaries](https://github.com/Sorrow446/go-upload/releases)
 
 ## Usage
 Upload single file to anonfiles:   

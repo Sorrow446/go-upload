@@ -10,11 +10,14 @@ Upload single file to anonfiles:
 Upload two files to anonfiles and catbox and write output template:   
 `go-ul_x64.exe anonfiles catbox -f G:\file.bin G:\file2.bin -o urls.txt`
 
+Upload all files in `G:\stuff` to zippyshare recursively and write output template:   
+`go-ul_x64.exe zippyshare -d G:\stuff -r -o urls.txt`
+
 Upload a single file to FTP server to /x/y/ and overwrite it if it already exists.   
 `go-ul_x64.exe ftp -f G:\file.bin -U ftp://myusername:mypassword@ftp.server.com:21/x/y/ -O`
 
 ```
-Usage: go-ul_x64.exe [--outpath OUTPATH] [--wipe] --files FILES [--private] [--template TEMPLATE] [--overwrite] [--user USER] HOSTS [HOSTS ...]
+Usage: ul_x64.exe [--outpath OUTPATH] [--wipe] [--files FILES] [--private] [--template TEMPLATE] [--overwrite] [--user USER] [--directories DIRECTORIES] [--recursive] HOSTS [HOSTS ...]
 
 Positional arguments:
   HOSTS                  Which hosts to upload to.
@@ -24,12 +27,13 @@ Options:
                          Path of text file to write template to. It will be created if it doesn't already exist.
   --wipe, -w             Wipe output text file on startup.
   --files FILES, -f FILES
-                         Paths of files to upload.
   --private, -P          *Set upload as private.
   --template TEMPLATE, -t TEMPLATE
                          Output text file template. Vars: filename, filepath, fileUrl [default: # {{.filename}}\n{{.fileUrl}}]
   --overwrite, -O        *Overwrite file on host if it already exists.
-  --user USER, -U USER   *User form for FTP. Folders will be created recursively if they don't already exist.
+  --user USER, -u USER   *User form for FTP. Folders will be created recursively if they don't already exist.
+  --directories DIRECTORIES, -d DIRECTORIES
+  --recursive, -r        Include subdirectories.
   --help, -h             display this help and exit
 ```
 \* = Not supported for all hosts.

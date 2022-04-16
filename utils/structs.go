@@ -6,7 +6,7 @@ type Args struct {
 	Wipe        bool     `arg:"-w" help:"Wipe output text file on startup."`
 	Files       []string `arg:"-f, help:"Paths of files to upload."`
 	Private     bool     `arg:"-P" help:"*Set upload as private."`
-	Template    string   `arg:"-t" default:"# {{.filename}}\n{{.fileUrl}}\n" help:"Output text file template. Vars: filename, filepath, fileUrl"`
+	Template    string   `arg:"-t" default:"# {{.filename}}\\n{{.fileUrl}}\\n" help:"Output text file template. Vars: filename, filepath, fileUrl"`
 	Overwrite   bool     `arg:"-O" help:"*Overwrite file on host if it already exists."`
 	User        string   `arg:"-u" help:"*User form for FTP. Folders will be created recursively if they don't already exist."`
 	Directories []string `arg:"-d, help:"Paths of folders to upload."`

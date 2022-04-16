@@ -11,8 +11,8 @@ Upload single file to anonfiles:
 Upload two files to anonfiles and catbox and write output template:   
 `go-ul_x64.exe anonfiles catbox -f G:\file.bin G:\file2.bin -o urls.txt`
 
-Upload all files in `G:\stuff` to zippyshare recursively and write output template:   
-`go-ul_x64.exe zippyshare -d G:\stuff -r -o urls.txt`
+Upload all files in `G:\stuff` to zippyshare recursively with a 500 kB/s limit and write output template:   
+`go-ul_x64.exe zippyshare -d G:\stuff -r -o urls.txt -l 0.5`
 
 Upload a single file to FTP server to /x/y/ and overwrite it if it already exists.   
 `go-ul_x64.exe ftp -f G:\file.bin -U ftp://myusername:mypassword@ftp.server.com:21/x/y/ -O`

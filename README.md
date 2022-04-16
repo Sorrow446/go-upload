@@ -1,6 +1,6 @@
 # go-upload
-File uploader with support for multiple hosts and progress reporting written in Go.
-![](https://i.imgur.com/mPKo3me.jpg)
+File uploader with support for multiple hosts and progress reporting written in Go. Large file friendly.
+![](https://i.imgur.com/Mtfn3pu.png)
 ![](https://i.imgur.com/D2a7NLu.png)   
 [Windows, Linux, macOS and Android binaries](https://github.com/Sorrow446/go-upload/releases)
 
@@ -18,7 +18,7 @@ Upload a single file to FTP server to /x/y/ and overwrite it if it already exist
 `go-ul_x64.exe ftp -f G:\file.bin -U ftp://myusername:mypassword@ftp.server.com:21/x/y/ -O`
 
 ```
-Usage: ul_x64.exe [--outpath OUTPATH] [--wipe] [--files FILES] [--private] [--template TEMPLATE] [--overwrite] [--user USER] [--directories DIRECTORIES] [--recursive] HOSTS [HOSTS ...]
+Usage: go-ul_x64.exe  [--outpath OUTPATH] [--wipe] [--files FILES] [--private] [--template TEMPLATE] [--overwrite] [--user USER] [--directories DIRECTORIES] [--recursive] [--speedlimit SPEEDLIMIT] HOSTS [HOSTS ...]
 
 Positional arguments:
   HOSTS                  Which hosts to upload to.
@@ -30,11 +30,13 @@ Options:
   --files FILES, -f FILES
   --private, -P          *Set upload as private.
   --template TEMPLATE, -t TEMPLATE
-                         Output text file template. Vars: filename, filepath, fileUrl [default: # {{.filename}}\n{{.fileUrl}}]
+                         Output text file template. Vars: filename, filepath, fileUrl [default: # {{.filename}}\n{{.fileUrl}}\n]
   --overwrite, -O        *Overwrite file on host if it already exists.
   --user USER, -u USER   *User form for FTP. Folders will be created recursively if they don't already exist.
   --directories DIRECTORIES, -d DIRECTORIES
   --recursive, -r        Include subdirectories.
+  --speedlimit SPEEDLIMIT, -l SPEEDLIMIT
+                         Upload speed limit in megabytes. Example: 0.5 = 500 kB/s, 1 = 1 MB/s, 1.5 = 1.5 MB/s. [default: -1]
   --help, -h             display this help and exit
 ```
 \* = Not supported for all hosts.

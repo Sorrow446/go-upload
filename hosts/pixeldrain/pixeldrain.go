@@ -6,8 +6,13 @@ import (
 	"main/utils"
 )
 
-func upload(uploadUrl, path string, size int64, headers map[string]string) (string, error) {
-	respBody, err := utils.MultipartUpload(uploadUrl, path, "file", size, nil, nil, headers)
+const (
+	referer   = "https://pixeldrain.com/"
+	uploadUrl = referer + "api/file"
+)
+
+func upload(path string, size, byteLimit int64, headers map[string]string) (string, error) {
+	respBody, err := utils.MultipartUpload(uploadUrl, path, "file", size, byteLimit, nil, nil, headers)
 	if err != nil {
 		return "", err
 	}
@@ -20,7 +25,7 @@ func upload(uploadUrl, path string, size int64, headers map[string]string) (stri
 	if !obj.Success {
 		return "", errors.New("Bad response.")
 	}
-	url := "https://pixeldrain.com/u/" + obj.ID
+	url := referer + "u/" + obj.ID
 	return url, nil
 }
 
@@ -29,10 +34,9 @@ func Run(args *utils.Args, path string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	uploadUrl := "https://pixeldrain.com/api/file"
 	headers := map[string]string{
-		"Referer": "https://pixeldrain.com/",
+		"Referer": referer,
 	}
-	fileUrl, err := upload(uploadUrl, path, size, headers)
+	fileUrl, err := upload(path, size, args.ByteLimit, headers)
 	return fileUrl, err
 }

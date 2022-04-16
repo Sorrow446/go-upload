@@ -7,10 +7,15 @@ import (
 	"path/filepath"
 )
 
+const (
+	referer     = "https://www.zippyshare.com/"
+	serverRegex = `var server = \'(www\d{1,3})\';`
+	urlRegex    = `onclick="this.select\(\);" value="(https://www\d{1,3}.zippyshare` +
+		`.com/v/[a-zA-Z\d]{8}/file.html)`
+)
+
 func getServer() (string, error) {
-	url := "https://www.zippyshare.com"
-	regexString := `var server = \'(www\d{1,3})\';`
-	match, err := utils.FindHtmlSubmatch(url, regexString)
+	match, err := utils.FindHtmlSubmatch(referer, serverRegex)
 	if err != nil {
 		return "", err
 	}
@@ -21,17 +26,15 @@ func getServer() (string, error) {
 }
 
 func extractUrl(html string) (string, error) {
-	regexString := `onclick="this.select\(\);" value="(https://www\d{1,3}.zippyshare` +
-		`.com/v/[a-zA-Z\d]{8}/file.html)`
-	match := utils.FindStringSubmatch(html, regexString)
+	match := utils.FindStringSubmatch(html, urlRegex)
 	if match == nil {
 		return "", errors.New("No regex match.")
 	}
 	return match[1], nil
 }
 
-func upload(uploadUrl, path string, size int64, formMap, headers map[string]string) (string, error) {
-	respBody, err := utils.MultipartUpload(uploadUrl, path, "file", size, formMap, nil, headers)
+func upload(uploadUrl, path string, size, byteLimit int64, formMap, headers map[string]string) (string, error) {
+	respBody, err := utils.MultipartUpload(uploadUrl, path, "file", size, byteLimit, formMap, nil, headers)
 	if err != nil {
 		return "", err
 	}
@@ -61,13 +64,13 @@ func Run(args *utils.Args, path string) (string, error) {
 		"embPlayerValues": "false",
 	}
 	headers := map[string]string{
-		"Referer": "https://www.zippyshare.com/",
+		"Referer": referer,
 	}
 	if args.Private {
 		formMap["private"] = "true"
 	} else {
 		formMap["notprivate"] = "true"
 	}
-	fileUrl, err := upload(uploadUrl, path, size, formMap, headers)
+	fileUrl, err := upload(uploadUrl, path, size, args.ByteLimit, formMap, headers)
 	return fileUrl, err
 }

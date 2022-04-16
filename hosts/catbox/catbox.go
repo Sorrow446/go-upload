@@ -5,8 +5,13 @@ import (
 	"main/utils"
 )
 
-func upload(uploadUrl, path string, size int64, formMap, headers map[string]string) (string, error) {
-	respBody, err := utils.MultipartUpload(uploadUrl, path, "fileToUpload", size, formMap, nil, headers)
+const (
+	uploadUrl = "https://catbox.moe/user/api.php"
+	referer   = "https://catbox.moe/"
+)
+
+func upload(path string, size, byteLimit int64, formMap, headers map[string]string) (string, error) {
+	respBody, err := utils.MultipartUpload(uploadUrl, path, "fileToUpload", size, byteLimit, formMap, nil, headers)
 	if err != nil {
 		return "", err
 	}
@@ -16,7 +21,6 @@ func upload(uploadUrl, path string, size int64, formMap, headers map[string]stri
 }
 
 func Run(args *utils.Args, path string) (string, error) {
-	uploadUrl := "https://catbox.moe/user/api.php"
 	size, err := utils.CheckSize(path, "200MB")
 	if err != nil {
 		return "", err
@@ -26,8 +30,8 @@ func Run(args *utils.Args, path string) (string, error) {
 		"reqtype":  "fileupload",
 	}
 	headers := map[string]string{
-		"Referer": "https://catbox.moe/",
+		"Referer": referer,
 	}
-	fileUrl, err := upload(uploadUrl, path, size, formMap, headers)
+	fileUrl, err := upload(path, size, args.ByteLimit, formMap, headers)
 	return fileUrl, err
 }

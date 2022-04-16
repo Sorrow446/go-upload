@@ -6,8 +6,12 @@ import (
 	"main/utils"
 )
 
+const (
+	referer   = "https://gofile.io/"
+	serverUrl = "https://api.gofile.io/getServer"
+)
+
 func getServer() (string, error) {
-	serverUrl := "https://api.gofile.io/getServer"
 	respBody, err := utils.DoGet(serverUrl, nil, nil)
 	if err != nil {
 		return "", err
@@ -24,8 +28,8 @@ func getServer() (string, error) {
 	return obj.Data.Server, nil
 }
 
-func upload(uploadUrl, path string, size int64, headers map[string]string) (string, error) {
-	respBody, err := utils.MultipartUpload(uploadUrl, path, "file", size, nil, nil, headers)
+func upload(uploadUrl, path string, size, byteLimit int64, headers map[string]string) (string, error) {
+	respBody, err := utils.MultipartUpload(uploadUrl, path, "file", size, byteLimit, nil, nil, headers)
 	if err != nil {
 		return "", err
 	}
@@ -52,8 +56,8 @@ func Run(args *utils.Args, path string) (string, error) {
 	}
 	uploadUrl := "https://" + server + ".gofile.io/uploadFile"
 	headers := map[string]string{
-		"Referer": "https://gofile.io/",
+		"Referer": referer,
 	}
-	url, err := upload(uploadUrl, path, size, headers)
+	url, err := upload(uploadUrl, path, size, args.ByteLimit, headers)
 	return url, err
 }

@@ -15,6 +15,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/dustin/go-humanize"
 )
@@ -33,16 +34,22 @@ func (t *myTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 }
 
 func (wc *WriteCounter) Write(p []byte) (int, error) {
+	var speed int64 = 0
 	n := len(p)
 	wc.Uploaded += int64(n)
 	percentage := float64(wc.Uploaded) / float64(wc.Total) * float64(100)
 	wc.Percentage = int(percentage)
 	// Because of form data size.
-	if wc.Percentage > 100 {
+	if wc.Uploaded > wc.Total {
 		wc.Uploaded = wc.Total
 		wc.Percentage = 100
 	}
-	fmt.Printf("\r%d%%, %s/%s ", wc.Percentage, humanize.Bytes(uint64(wc.Uploaded)), wc.TotalStr)
+	toDivideBy := time.Now().UnixMilli() - wc.StartTime
+	if toDivideBy != 0 {
+		speed = int64(wc.Uploaded) / toDivideBy * 1000
+	}
+	fmt.Printf("\r%d%% @ %s/s, %s/%s ", wc.Percentage, humanize.Bytes(uint64(speed)),
+		humanize.Bytes(uint64(wc.Uploaded)), wc.TotalStr)
 	return n, nil
 }
 
@@ -74,7 +81,7 @@ func makeFormPart(m *multipart.Writer, fileField, filename string) (io.Writer, e
 	return m.CreatePart(header)
 }
 
-func MultipartUpload(uploadUrl, path, fileField string, size int64, formMap, params, headers map[string]string) (io.ReadCloser, error) {
+func MultipartUpload(uploadUrl, path, fileField string, size, byteLimit int64, formMap, params, headers map[string]string) (io.ReadCloser, error) {
 	filename := filepath.Base(path)
 	r, w := io.Pipe()
 	m := multipart.NewWriter(w)
@@ -85,7 +92,11 @@ func MultipartUpload(uploadUrl, path, fileField string, size int64, formMap, par
 		return nil, err
 	}
 	defer f.Close()
-	counter := &WriteCounter{Total: size, TotalStr: humanize.Bytes(uint64(size))}
+	counter := &WriteCounter{
+		Total:     size,
+		TotalStr:  humanize.Bytes(uint64(size)),
+		StartTime: time.Now().UnixMilli(),
+	}
 	// Implement and get err channel working. Seems to hang. Implement content len.
 	go func() {
 		defer w.Close()
@@ -104,9 +115,22 @@ func MultipartUpload(uploadUrl, path, fileField string, size int64, formMap, par
 		if err != nil {
 			return
 		}
-		_, err = io.Copy(part, f)
-		if err != nil {
-			return
+		if byteLimit == -1000000 {
+			_, err = io.Copy(part, f)
+			if err != nil {
+				return
+			}
+		} else {
+			for range time.Tick(time.Second * 1) {
+				_, err = io.CopyN(part, f, byteLimit)
+				if errors.Is(err, io.EOF) {
+					err = nil
+					break
+				}
+				if err != nil {
+					return
+				}
+			}
 		}
 	}()
 	req, err := http.NewRequest(http.MethodPost, uploadUrl, io.TeeReader(r, counter))

@@ -7,11 +7,16 @@ import (
 	"strconv"
 )
 
-func getUploadUrl() (string, string, string, error) {
-	url := "https://megaup.net/"
-	urlRegexString := `https://f\d{1,3}.megaup.net/core/page/ajax/file_upload_handler.ajax.php\?` +
+const (
+	referer        = "https://megaup.net/"
+	urlRegexString = `https://f\d{1,3}.megaup.net/core/page/ajax/file_upload_handler.ajax.php\?` +
 		`r=megaup.net&p=https&csaKey1=[a-z\d]{64}&csaKey2=[a-z\d]{64}`
-	html, err := utils.GetHtml(url)
+	sessTrackRegexString = `_sessionid: '([a-z\d]{26})'. cTracker: '([a-z\d]{32})'`
+)
+
+func getUploadUrl() (string, string, string, error) {
+
+	html, err := utils.GetHtml(referer)
 	if err != nil {
 		return "", "", "", err
 	}
@@ -22,8 +27,7 @@ func getUploadUrl() (string, string, string, error) {
 	if match == nil {
 		return "", "", "", errors.New("No regex match.")
 	}
-	uploadUrl := match[0]
-	sessTrackRegexString := `_sessionid: '([a-z\d]{26})'. cTracker: '([a-z\d]{32})'`
+
 	match = utils.FindStringSubmatch(html, sessTrackRegexString)
 	if err != nil {
 		return "", "", "", err
@@ -31,11 +35,11 @@ func getUploadUrl() (string, string, string, error) {
 	if match == nil {
 		return "", "", "", errors.New("No regex match.")
 	}
-	return uploadUrl, match[1], match[2], nil
+	return match[0], match[1], match[2], nil
 }
 
-func upload(uploadUrl, path string, size int64, formMap, headers map[string]string) (string, error) {
-	respBody, err := utils.MultipartUpload(uploadUrl, path, "files[]", size, formMap, nil, headers)
+func upload(uploadUrl, path string, size, byteLimit int64, formMap, headers map[string]string) (string, error) {
+	respBody, err := utils.MultipartUpload(uploadUrl, path, "files[]", size, byteLimit, formMap, nil, headers)
 	if err != nil {
 		return "", err
 	}
@@ -73,8 +77,8 @@ func Run(args *utils.Args, path string) (string, error) {
 		"maxChunkSize": "100000000",
 	}
 	headers := map[string]string{
-		"Referer": "https://megaup.net/",
+		"Referer": referer,
 	}
-	fileUrl, err := upload(uploadUrl, path, size, formMap, headers)
+	fileUrl, err := upload(uploadUrl, path, size, args.ByteLimit, formMap, headers)
 	return fileUrl, err
 }

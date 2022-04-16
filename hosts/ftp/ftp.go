@@ -67,7 +67,11 @@ func upload(c *_ftp.ServerConn, path, filename string) error {
 		return err
 	}
 	size := stat.Size()
-	counter := &utils.WriteCounter{Total: size, TotalStr: humanize.Bytes(uint64(size))}
+	counter := &utils.WriteCounter{
+		Total:     size,
+		TotalStr:  humanize.Bytes(uint64(size)),
+		StartTime: time.Now().UnixMilli(),
+	}
 	err = c.Stor(filename, io.TeeReader(f, counter))
 	return err
 }
@@ -87,11 +91,9 @@ func parseUrl(userString string) (*User, error) {
 	password, _ := userInfo.Password()
 	if host == "" {
 		return nil, errors.New("Host required.")
-	}
-	if username == "" {
+	} else if username == "" {
 		return nil, errors.New("Username required.")
-	}
-	if password == "" {
+	} else if password == "" {
 		return nil, errors.New("Password required.")
 	}
 	if path == "/" {

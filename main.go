@@ -22,7 +22,10 @@ import (
 	"text/template"
 
 	"github.com/alexflint/go-arg"
+	"github.com/dustin/go-humanize"
 )
+
+const megabyte = 1000000
 
 var (
 	funcMap = map[string]func(*utils.Args, string) (string, error){
@@ -167,8 +170,16 @@ func filterPaths(paths []string) ([]string, error) {
 func parseArgs() (*utils.Args, error) {
 	var args utils.Args
 	arg.MustParse(&args)
+	if args.SpeedLimit != -1 && args.SpeedLimit <= 0 {
+		return nil, errors.New("Invalid speed limit.")
+	}
 	if len(args.Files) == 0 && len(args.Directories) == 0 {
 		return nil, errors.New("File path and/or directory required.")
+	}
+	args.ByteLimit = int64(megabyte * args.SpeedLimit)
+	if args.SpeedLimit != -1 {
+		fmt.Printf("Upload speed limiting is active, limit: %s/s.\n",
+			humanize.Bytes(uint64(args.ByteLimit)))
 	}
 	if len(args.Directories) > 0 {
 		err := processDirs(&args)

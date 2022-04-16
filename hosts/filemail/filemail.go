@@ -7,7 +7,10 @@ import (
 	"strconv"
 )
 
-const apiBase = "https://www.filemail.com/api/transfer/"
+const (
+	apiBase = "https://www.filemail.com/api/transfer/"
+	referer = "https://www.filemail.com/"
+)
 
 func initUpload(size int64, headers map[string]string) (*Initialize, error) {
 	initUrl := apiBase + "initialize"
@@ -33,8 +36,8 @@ func initUpload(size int64, headers map[string]string) (*Initialize, error) {
 	return &obj, nil
 }
 
-func upload(uploadUrl, path string, size int64, params, headers map[string]string) error {
-	respBody, err := utils.MultipartUpload(uploadUrl, path, "file", size, nil, params, headers)
+func upload(uploadUrl, path string, size, byteLimit int64, params, headers map[string]string) error {
+	respBody, err := utils.MultipartUpload(uploadUrl, path, "file", size, byteLimit, nil, params, headers)
 	if err != nil {
 		return err
 	}
@@ -67,7 +70,7 @@ func Run(args *utils.Args, path string) (string, error) {
 		return "", err
 	}
 	headers := map[string]string{
-		"Referer": "https://www.filemail.com/",
+		"Referer": referer,
 		"Source":  "Web",
 	}
 	initMeta, err := initUpload(size, headers)
@@ -78,7 +81,7 @@ func Run(args *utils.Args, path string) (string, error) {
 		"transferid":  initMeta.Transferid,
 		"transferkey": initMeta.Transferkey,
 	}
-	err = upload(initMeta.Transferurl, path, size, params, headers)
+	err = upload(initMeta.Transferurl, path, size, args.ByteLimit, params, headers)
 	if err != nil {
 		return "", err
 	}

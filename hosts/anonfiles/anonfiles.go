@@ -6,8 +6,13 @@ import (
 	"main/utils"
 )
 
-func upload(uploadUrl, path string, size int64, headers map[string]string) (string, error) {
-	respBody, err := utils.MultipartUpload(uploadUrl, path, "file", size, nil, nil, nil)
+const (
+	uploadUrl = "https://api.anonfiles.com/upload"
+	referer   = "https://anonfiles.com/"
+)
+
+func upload(path string, size, byteLimit int64, headers map[string]string) (string, error) {
+	respBody, err := utils.MultipartUpload(uploadUrl, path, "file", size, byteLimit, nil, nil, nil)
 	if err != nil {
 		return "", err
 	}
@@ -28,14 +33,13 @@ func upload(uploadUrl, path string, size int64, headers map[string]string) (stri
 }
 
 func Run(args *utils.Args, path string) (string, error) {
-	uploadUrl := "https://api.anonfiles.com/upload"
 	size, err := utils.CheckSize(path, "20GB")
 	if err != nil {
 		return "", err
 	}
 	headers := map[string]string{
-		"Referer": "https://anonfiles.com/",
+		"Referer": referer,
 	}
-	fileUrl, err := upload(uploadUrl, path, size, headers)
+	fileUrl, err := upload(path, size, args.ByteLimit, headers)
 	return fileUrl, err
 }

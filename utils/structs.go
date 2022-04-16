@@ -21,3 +21,8 @@ type WriteCounter struct {
 	Uploaded   int64
 	Percentage int
 }
+
+type TemplateEscPair struct {
+	From []byte
+	To   []byte
+}

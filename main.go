@@ -24,18 +24,26 @@ import (
 	"github.com/alexflint/go-arg"
 )
 
-var funcMap = map[string]func(*utils.Args, string) (string, error){
-	"anonfiles":  anonfiles.Run,
-	"catbox":     catbox.Run,
-	"fileio":     fileio.Run,
-	"ftp":        ftp.Run,
-	"gofile":     gofile.Run,
-	"pixeldrain": pixeldrain.Run,
-	"uguu":       uguu.Run,
-	"zippyshare": zippyshare.Run,
-	"megaup":     megaup.Run,
-	"filemail":   filemail.Run,
-}
+var (
+	funcMap = map[string]func(*utils.Args, string) (string, error){
+		"anonfiles":  anonfiles.Run,
+		"catbox":     catbox.Run,
+		"fileio":     fileio.Run,
+		"ftp":        ftp.Run,
+		"gofile":     gofile.Run,
+		"pixeldrain": pixeldrain.Run,
+		"uguu":       uguu.Run,
+		"zippyshare": zippyshare.Run,
+		"megaup":     megaup.Run,
+		"filemail":   filemail.Run,
+	}
+	templateEscPairs = []utils.TemplateEscPair{
+		// Newline
+		utils.TemplateEscPair{[]byte{'\x5C', '\x6E'}, []byte{'\x0A'}},
+		// Tab
+		utils.TemplateEscPair{[]byte{'\x5C', '\x74'}, []byte{'\x09'}},
+	}
+)
 
 func populateDirs(path string) ([]string, error) {
 	var paths []string
@@ -182,7 +190,18 @@ func parseArgs() (*utils.Args, error) {
 	return &args, nil
 }
 
-func parseTemplate(templateText string, meta map[string]string) string {
+func escapeTemplate(template []byte) []byte {
+	var escaped []byte
+	for i, pair := range templateEscPairs {
+		if i != 0 {
+			template = escaped
+		}
+		escaped = bytes.ReplaceAll(template, pair.From, pair.To)
+	}
+	return escaped
+}
+
+func parseTemplate(templateText string, meta map[string]string) []byte {
 	var buffer bytes.Buffer
 	for {
 		err := template.Must(template.New("").Parse(templateText)).Execute(&buffer, meta)
@@ -193,7 +212,7 @@ func parseTemplate(templateText string, meta map[string]string) string {
 		templateText = "# {{.filename}}\n{{.fileUrl}}\n"
 		buffer.Reset()
 	}
-	return buffer.String()
+	return escapeTemplate(buffer.Bytes())
 }
 
 func writeTxt(path, filePath, fileUrl, templateText string) error {
@@ -207,7 +226,8 @@ func writeTxt(path, filePath, fileUrl, templateText string) error {
 		"fileUrl":  fileUrl,
 	}
 	parsed := parseTemplate(templateText, meta)
-	_, err = f.Write([]byte(parsed))
+	_, err = f.Write(parsed)
+	f.Close()
 	return err
 }
 

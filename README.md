@@ -49,7 +49,7 @@ Output with the default template:
 # 2.jpg
 https://anonfiles.com/Hde2H4F5ue/2_jpg
 ```
-Args: filename, filePath, fileUrl
+Vars: filename, filePath, fileUrl
 
 ## Supported hosts
 |Host|Argument|

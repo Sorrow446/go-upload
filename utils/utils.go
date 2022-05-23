@@ -25,10 +25,10 @@ const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 
 
 var (
 	jar, _ = cookiejar.New(nil)
-	client = &http.Client{Transport: &myTransport{}, Jar: jar}
+	client = &http.Client{Transport: &Transport{}, Jar: jar}
 )
 
-func (t *myTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+func (t *Transport) RoundTrip(req *http.Request) (*http.Response, error) {
 	req.Header.Add(
 		"User-Agent", userAgent,
 	)

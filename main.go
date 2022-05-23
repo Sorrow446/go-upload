@@ -14,6 +14,7 @@ import (
 	"main/hosts/megaup"
 	"main/hosts/pixeldrain"
 	"main/hosts/uguu"
+	"main/hosts/wetransfer"
 	"main/hosts/zippyshare"
 	"main/utils"
 	"os"
@@ -39,6 +40,7 @@ var (
 		"zippyshare": zippyshare.Run,
 		"megaup":     megaup.Run,
 		"filemail":   filemail.Run,
+		"wetransfer": wetransfer.Run,
 	}
 	templateEscPairs = []utils.TemplateEscPair{
 		// Newline

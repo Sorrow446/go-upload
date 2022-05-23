@@ -15,7 +15,7 @@ type Args struct {
 	ByteLimit   int64    `arg:"-"`
 }
 
-type myTransport struct{}
+type Transport struct{}
 
 type WriteCounter struct {
 	Total      int64

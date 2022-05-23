@@ -63,7 +63,7 @@ Vars: filename, filePath, fileUrl
 |[MegaUp](https://megaup.net/)|megaup
 |[pixeldrain](https://pixeldrain.com/)|pixeldrain
 |[Uguu](https://uguu.se/)|uguu
-|[WeTransfer](https://wetransfer.com/)|Wetransfer
+|[WeTransfer](https://wetransfer.com/)|wetransfer
 |[zippyshare](https://www.zippyshare.com/)|zippyshare
 
 Host arguments are case insensitive.

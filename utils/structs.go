@@ -11,7 +11,7 @@ type Args struct {
 	User        string   `arg:"-u" help:"*User form for FTP. Folders will be created recursively if they don't already exist."`
 	Directories []string `arg:"-d, help:"Paths of folders to upload."`
 	Recursive   bool     `arg:"-r" help:"Include subdirectories."`
-	SpeedLimit  float64  `arg:"-l" default:"-1" help:"Upload speed limit in megabytes. Example: 0.5 = 500 kB/s, 1 = 1 MB/s, 1.5 = 1.5 MB/s."`
+	SpeedLimit  float64  `arg:"-l" default:"-1" help:"*Upload speed limit in megabytes. Example: 0.5 = 500 kB/s, 1 = 1 MB/s, 1.5 = 1.5 MB/s."`
 	ByteLimit   int64    `arg:"-"`
 }
 

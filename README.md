@@ -29,7 +29,7 @@ Options:
   --files FILES, -f FILES
   --private, -P          *Set upload as private.
   --template TEMPLATE, -t TEMPLATE
-                         Output text file template. Vars: filename, filepath, fileUrl [default: # {{.filename}}\n{{.fileUrl}}\n]
+                         Output text file template. Vars: filename, filePath, fileUrl [default: # {{.filename}}\n{{.fileUrl}}\n]
   --overwrite, -O        *Overwrite file on host if it already exists.
   --user USER, -u USER   *User form for FTP. Folders will be created recursively if they don't already exist.
   --directories DIRECTORIES, -d DIRECTORIES

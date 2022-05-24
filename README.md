@@ -35,7 +35,7 @@ Options:
   --directories DIRECTORIES, -d DIRECTORIES
   --recursive, -r        Include subdirectories.
   --speedlimit SPEEDLIMIT, -l SPEEDLIMIT
-                         Upload speed limit in megabytes. Example: 0.5 = 500 kB/s, 1 = 1 MB/s, 1.5 = 1.5 MB/s. [default: -1]
+                         *Upload speed limit in megabytes. Example: 0.5 = 500 kB/s, 1 = 1 MB/s, 1.5 = 1.5 MB/s. [default: -1]
   --help, -h             display this help and exit
 ```
 \* = Not supported for all hosts.

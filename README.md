@@ -1,7 +1,6 @@
 # go-upload
 File uploader with support for multiple hosts and progress reporting written in Go. Large file-friendly.
-![](https://i.imgur.com/Mtfn3pu.png)
-![](https://i.imgur.com/D2a7NLu.png)   
+![](https://i.imgur.com/Mtfn3pu.png)  
 [Windows, Linux, macOS and Android binaries](https://github.com/Sorrow446/go-upload/releases)
 
 ## Usage

@@ -53,23 +53,23 @@ https://anonfiles.com/Hde2H4F5ue/2_jpg
 Vars: filename, filePath, fileUrl
 
 ## Supported hosts
-|Host|Argument|
-| --- | --- |
-|[anonfiles](https://anonfiles.com/)|anonfiles
-|[Catbox](https://catbox.moe/)|catbox
-|[file.io](https://www.file.io/)|fileio
-|[Filemail](https://www.filemail.com/)|filemail
-|FTP|ftp
-|[Gofile](https://gofile.io/)|gofile
-|[MegaUp](https://megaup.net/)|megaup
-|[MixDrop](https://mixdrop.co/)|mixdrop
-|[pixeldrain](https://pixeldrain.com/)|pixeldrain
-|[Racaty](https://racaty.net/)|racaty
-|[transfer.sh](https://transfer.sh/)|transfersh
-|[Uguu](https://uguu.se/)|uguu
-|[WeTransfer](https://wetransfer.com/)|wetransfer
-|[workupload](https://workupload.com/)|workupload
-|[zippyshare](https://www.zippyshare.com/)|zippyshare
+|Host|Argument|Size Limit|
+| --- | --- | --- |
+|[anonfiles](https://anonfiles.com/)|anonfiles|20GB
+|[Catbox](https://catbox.moe/)|catbox|200 MB
+|[file.io](https://www.file.io/)|fileio|2 GB
+|[Filemail](https://www.filemail.com/)|filemail|5 GB
+|FTP|ftp|-
+|[Gofile](https://gofile.io/)|gofile|unlim
+|[MegaUp](https://megaup.net/)|megaup|5 GB
+|[MixDrop](https://mixdrop.co/)|mixdrop|unlim
+|[pixeldrain](https://pixeldrain.com/)|pixeldrain|10 GB
+|[Racaty](https://racaty.net/)|racaty|unlim
+|[transfer.sh](https://transfer.sh/)|transfersh|unlim
+|[Uguu](https://uguu.se/)|uguu|128 MB
+|[WeTransfer](https://wetransfer.com/)|wetransfer|2GB
+|[workupload](https://workupload.com/)|workupload|2GB
+|[zippyshare](https://www.zippyshare.com/)|zippyshare|500MB
 
 Host arguments are case insensitive.
 

@@ -55,7 +55,7 @@ Vars: filename, filePath, fileUrl
 ## Supported hosts
 |Host|Argument|Size Limit|
 | --- | --- | --- |
-|[anonfiles](https://anonfiles.com/)|anonfiles|20GB
+|[anonfiles](https://anonfiles.com/)|anonfiles|20 GB
 |[Catbox](https://catbox.moe/)|catbox|200 MB
 |[file.io](https://www.file.io/)|fileio|2 GB
 |[Filemail](https://www.filemail.com/)|filemail|5 GB

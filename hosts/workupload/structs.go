@@ -1,7 +1,5 @@
 package workupload
 
-type Transport struct{}
-
 type GetServerResp struct {
 	Success bool `json:"success"`
 	Data    struct {

@@ -68,6 +68,7 @@ Vars: filename, filePath, fileUrl
 |[transfer.sh](https://transfer.sh/)|transfersh
 |[Uguu](https://uguu.se/)|uguu
 |[WeTransfer](https://wetransfer.com/)|wetransfer
+|[workupload](https://workupload.com/)|workupload
 |[zippyshare](https://www.zippyshare.com/)|zippyshare
 
 Host arguments are case insensitive.

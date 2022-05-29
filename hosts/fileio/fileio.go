@@ -31,7 +31,7 @@ func upload(path string, size, byteLimit int64, headers map[string]string) (stri
 }
 
 func Run(args *utils.Args, path string) (string, error) {
-	size, err := utils.CheckSize(path, "100MB")
+	size, err := utils.CheckSize(path, "2GB")
 	if err != nil {
 		return "", err
 	}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -265,6 +266,59 @@ func outSetup(path string, wipe bool) error {
 	return nil
 }
 
+func outSetupJob(path string) error {
+	f, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0755)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	jobs := &utils.UploadJobs{
+		Jobs: []utils.UploadJob{},
+	}
+
+	m, err := json.MarshalIndent(&jobs, "", "\t")
+	if err != nil {
+		return err
+	}
+	_, err = f.Write(m)
+	return err
+}
+
+func writeJob(jobPath, _url, host, filePath string, jobErr error) error {
+	var (
+		ok      = true
+		errText string
+	)
+	if jobErr != nil {
+		ok = false
+		errText = jobErr.Error()
+	}
+	job := &utils.UploadJob{
+		URL:       _url,
+		Host:      host,
+		Filename:  filepath.Base(filePath),
+		FilePath:  filePath,
+		Ok:        ok,
+		ErrorText: errText,
+	}
+	data, err := ioutil.ReadFile(jobPath)
+	if err != nil {
+		return err
+	}
+	var jobs utils.UploadJobs
+	err = json.Unmarshal(data, &jobs)
+	if err != nil {
+		return err
+	}
+	jobs.Jobs = append(jobs.Jobs, *job)
+	m, err := json.MarshalIndent(&jobs, "", "\t")
+	if err != nil {
+		return err
+	}
+	err = ioutil.WriteFile(jobPath, m, 0755)
+	return err
+}
+
 func main() {
 	args, err := parseArgs()
 	if err != nil {
@@ -273,6 +327,12 @@ func main() {
 	outPath := args.OutPath
 	if outPath != "" {
 		err := outSetup(outPath, args.Wipe)
+		if err != nil {
+			panic(err)
+		}
+	}
+	if args.JobOutPath != "" {
+		err := outSetupJob(args.JobOutPath)
 		if err != nil {
 			panic(err)
 		}
@@ -293,15 +353,22 @@ func main() {
 			fmt.Printf("File %d of %d:\n", num+1, pathTotal)
 			fmt.Println(path)
 			fileUrl, err := hostFunc(args, path)
+			if args.JobOutPath != "" {
+				jobErr := writeJob(args.JobOutPath, fileUrl, host, path, err)
+				if jobErr != nil {
+					// Intentional.
+					panic(jobErr)
+				}
+			}
 			if err != nil {
-				fmt.Println("Upload failed.\n", err)
+				fmt.Println("Upload failed.\n" + err.Error())
 				continue
 			}
 			fmt.Println(fileUrl)
 			if outPath != "" {
 				err = writeTxt(outPath, path, fileUrl, args.Template)
 				if err != nil {
-					fmt.Println("Failed to write to output text file.\n", err)
+					fmt.Println("Failed to write to output text file.\n" + err.Error())
 				}
 			}
 		}

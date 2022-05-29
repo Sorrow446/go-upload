@@ -13,6 +13,7 @@ type Args struct {
 	Recursive   bool     `arg:"-r" help:"Include subdirectories."`
 	SpeedLimit  float64  `arg:"-l" default:"-1" help:"*Upload speed limit in megabytes. Example: 0.5 = 500 kB/s, 1 = 1 MB/s, 1.5 = 1.5 MB/s."`
 	ByteLimit   int64    `arg:"-"`
+	JobOutPath  string   `arg:"-j" help:"Path of JSON to write jobs to."`
 }
 
 type Transport struct{}
@@ -28,4 +29,17 @@ type WriteCounter struct {
 type TemplateEscPair struct {
 	From []byte
 	To   []byte
+}
+
+type UploadJob struct {
+	URL       string `json:"url"`
+	Host      string `json:"host"`
+	Filename  string `json:"filename"`
+	FilePath  string `json:"file_path"`
+	Ok        bool   `json:"ok"`
+	ErrorText string `json:"error_text"`
+}
+
+type UploadJobs struct {
+	Jobs []UploadJob `json:"jobs"`
 }

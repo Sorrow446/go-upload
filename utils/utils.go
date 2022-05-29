@@ -14,6 +14,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
@@ -308,6 +309,33 @@ func DoPost(_url string, params, headers map[string]string, jsonMap map[string]i
 	return do.Body, nil
 }
 
+func DoFormPost(_url string, params, headers map[string]string) (io.ReadCloser, error) {
+	if headers == nil {
+		headers = map[string]string{}
+	}
+	query := url.Values{}
+	for k, v := range params {
+		query.Set(k, v)
+	}
+	encQuery := query.Encode()
+	headers["Content-Type"] = "application/x-www-form-urlencoded"
+	headers["Content-Length"] = strconv.Itoa(len(encQuery))
+	req, err := http.NewRequest(http.MethodPost, _url, strings.NewReader(encQuery))
+	if err != nil {
+		return nil, err
+	}
+	setHeaders(req, headers)
+	do, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if do.StatusCode != http.StatusOK {
+		do.Body.Close()
+		return nil, errors.New(do.Status)
+	}
+	return do.Body, nil
+}
+
 // Unknown extensions and extensions with multiple periods in will be treated as octet.
 func guessMimeType(path string) string {
 	octetMime := "application/octet-stream"
@@ -321,4 +349,8 @@ func guessMimeType(path string) string {
 		return octetMime
 	}
 	return resolved
+}
+
+func GetCookies(u *url.URL) []*http.Cookie {
+	return client.Jar.Cookies(u)
 }

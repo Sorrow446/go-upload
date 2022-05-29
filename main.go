@@ -19,6 +19,7 @@ import (
 	"main/hosts/transfersh"
 	"main/hosts/uguu"
 	"main/hosts/wetransfer"
+	"main/hosts/workupload"
 	"main/hosts/zippyshare"
 	"main/utils"
 	"os"
@@ -48,12 +49,13 @@ var (
 		"uguu":       uguu.Run,
 		"wetransfer": wetransfer.Run,
 		"zippyshare": zippyshare.Run,
+		"workupload": workupload.Run,
 	}
 	templateEscPairs = []utils.TemplateEscPair{
 		// Newline
-		utils.TemplateEscPair{[]byte{'\x5C', '\x6E'}, []byte{'\x0A'}},
+		{From: []byte{'\x5C', '\x6E'}, To: []byte{'\x0A'}},
 		// Tab
-		utils.TemplateEscPair{[]byte{'\x5C', '\x74'}, []byte{'\x09'}},
+		{From: []byte{'\x5C', '\x74'}, To: []byte{'\x09'}},
 	}
 )
 

@@ -78,7 +78,7 @@ If you would like to use go-upload with your software, you can use the `-j` arg 
 
 It will only panic and return an exit code 1 if:
 1. Setup fails (arg parsing, output text or job file setup).
-2. A job or text file template fails to write.
+2. A job fails to write.
 
 Example output:
 ```json

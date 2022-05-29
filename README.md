@@ -73,7 +73,7 @@ Vars: filename, filePath, fileUrl
 Host arguments are case insensitive.
 
 ## For developers
-If you would like to use go-upload with your software, you can use the `-j` arg to have it write a job JSON to a specified path.
+If you would like to use go-upload with your software, you can use the `-j` arg to have it write a jobs JSON to a specified path.
 
 It will only panic and return an exit code 1 if:
 1. Setup fails (arg parsing, output text or job file setup).

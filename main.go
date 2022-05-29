@@ -12,7 +12,10 @@ import (
 	"main/hosts/ftp"
 	"main/hosts/gofile"
 	"main/hosts/megaup"
+	"main/hosts/mixdrop"
 	"main/hosts/pixeldrain"
+	"main/hosts/racaty"
+	"main/hosts/transfersh"
 	"main/hosts/uguu"
 	"main/hosts/wetransfer"
 	"main/hosts/zippyshare"
@@ -33,14 +36,17 @@ var (
 		"anonfiles":  anonfiles.Run,
 		"catbox":     catbox.Run,
 		"fileio":     fileio.Run,
+		"filemail":   filemail.Run,
 		"ftp":        ftp.Run,
 		"gofile":     gofile.Run,
-		"pixeldrain": pixeldrain.Run,
-		"uguu":       uguu.Run,
-		"zippyshare": zippyshare.Run,
 		"megaup":     megaup.Run,
-		"filemail":   filemail.Run,
+		"mixdrop":    mixdrop.Run,
+		"pixeldrain": pixeldrain.Run,
+		"racaty":     racaty.Run,
+		"transfersh": transfersh.Run,
+		"uguu":       uguu.Run,
 		"wetransfer": wetransfer.Run,
+		"zippyshare": zippyshare.Run,
 	}
 	templateEscPairs = []utils.TemplateEscPair{
 		// Newline

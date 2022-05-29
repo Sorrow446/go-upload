@@ -67,9 +67,9 @@ Vars: filename, filePath, fileUrl
 |[Racaty](https://racaty.net/)|racaty|unlim
 |[transfer.sh](https://transfer.sh/)|transfersh|unlim
 |[Uguu](https://uguu.se/)|uguu|128 MB
-|[WeTransfer](https://wetransfer.com/)|wetransfer|2GB
-|[workupload](https://workupload.com/)|workupload|2GB
-|[zippyshare](https://www.zippyshare.com/)|zippyshare|500MB
+|[WeTransfer](https://wetransfer.com/)|wetransfer|2 GB
+|[workupload](https://workupload.com/)|workupload|2 GB
+|[zippyshare](https://www.zippyshare.com/)|zippyshare|500 MB
 
 Host arguments are case insensitive.
 

@@ -103,4 +103,4 @@ Example output:
 	]
 }
 ```
-It will be wiped on every startup.
+If a job file with the same path already exists, it will be wiped.

@@ -60,7 +60,10 @@ Vars: filename, filePath, fileUrl
 |FTP|ftp
 |[Gofile](https://gofile.io/)|gofile
 |[MegaUp](https://megaup.net/)|megaup
+|[MixDrop](https://mixdrop.co/)|mixdrop
 |[pixeldrain](https://pixeldrain.com/)|pixeldrain
+|[Racaty](https://racaty.net/)|racaty
+|[transfer.sh](https://transfer.sh/)|transfersh
 |[Uguu](https://uguu.se/)|uguu
 |[WeTransfer](https://wetransfer.com/)|wetransfer
 |[zippyshare](https://www.zippyshare.com/)|zippyshare

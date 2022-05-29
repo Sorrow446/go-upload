@@ -36,6 +36,8 @@ Options:
   --recursive, -r        Include subdirectories.
   --speedlimit SPEEDLIMIT, -l SPEEDLIMIT
                          *Upload speed limit in megabytes. Example: 0.5 = 500 kB/s, 1 = 1 MB/s, 1.5 = 1.5 MB/s. [default: -1]
+  --joboutpath JOBOUTPATH, -j JOBOUTPATH
+                         Path of JSON to write jobs to.             
   --help, -h             display this help and exit
 ```
 \* = Not supported for all hosts.
@@ -69,3 +71,35 @@ Vars: filename, filePath, fileUrl
 |[zippyshare](https://www.zippyshare.com/)|zippyshare
 
 Host arguments are case insensitive.
+
+## For developers
+If you would like to use go-upload with your software, you can use the `-j` arg to have it write a job JSON to a specified path.
+
+It will only panic and return an exit code 1 if:
+1. Setup fails (arg parsing, output text or job file setup).
+2. A job fails to write.
+
+Example output:
+```json
+{
+	"jobs": [
+		{
+			"url": "https://anonfiles.com/La53h1l3ye/1_gif",
+			"host": "anonfiles",
+			"filename": "1.gif",
+			"file_path": "G:\\go\\ul_5\\1.gif",
+			"ok": true,
+			"error_text": ""
+		},
+		{
+			"url": "https://we.tl/t-tNBYrFyQhH",
+			"host": "wetransfer",
+			"filename": "1.gif",
+			"file_path": "G:\\go\\ul_5\\1.gif",
+			"ok": true,
+			"error_text": ""
+		}
+	]
+}
+```
+It will be wiped on every startup.

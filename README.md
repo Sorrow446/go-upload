@@ -64,7 +64,7 @@ Vars: filename, filePath, fileUrl
 |[MegaUp](https://megaup.net/)|megaup|5 GB
 |[MixDrop](https://mixdrop.co/)|mixdrop|unlim
 |[pixeldrain](https://pixeldrain.com/)|pixeldrain|10 GB
-|[Racaty](https://racaty.net/)|racaty|unlim
+|[Racaty](https://racaty.net/)|racaty|10 GB
 |[transfer.sh](https://transfer.sh/)|transfersh|unlim
 |[Uguu](https://uguu.se/)|uguu|128 MB
 |[WeTransfer](https://wetransfer.com/)|wetransfer|2 GB

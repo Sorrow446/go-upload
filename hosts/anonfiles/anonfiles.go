@@ -12,13 +12,11 @@ const (
 )
 
 func upload(path string, size, byteLimit int64, headers map[string]string) (string, error) {
-	respBody, err := utils.MultipartUpload(uploadUrl, path, "file", size, byteLimit, nil, nil, nil)
+	respBody, err := utils.MultipartUpload(uploadUrl, path, "file", size, byteLimit, nil, nil, headers)
 	if err != nil {
 		return "", err
 	}
-	if respBody != nil {
-		defer respBody.Close()
-	}
+	defer respBody.Close()
 	var obj Upload
 	err = json.NewDecoder(respBody).Decode(&obj)
 	if err != nil {

@@ -42,7 +42,7 @@ func upload(uploadUrl, path string, size, byteLimit int64, headers, formMap map[
 }
 
 func Run(args *utils.Args, path string) (string, error) {
-	size, err := utils.CheckSize(path, "unlim")
+	size, err := utils.CheckSize(path, "10GB")
 	if err != nil {
 		return "", err
 	}

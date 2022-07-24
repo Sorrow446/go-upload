@@ -6,6 +6,6 @@ type Upload struct {
 		Hash string `json:"hash"`
 		Name string `json:"name"`
 		URL  string `json:"url"`
-		Size string  `json:"size"`
+		Size int64  `json:"size"`
 	} `json:"files"`
 }

@@ -212,8 +212,8 @@ func FindStringSubmatches(text, regexString string) [][]string {
 	return matches
 }
 
-func FindHtmlSubmatch(url, regexString string) ([]string, error) {
-	html, err := GetHtml(url)
+func FindHtmlSubmatch(_url, regexString string) ([]string, error) {
+	html, err := GetHtml(_url)
 	if err != nil {
 		return nil, err
 	}

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"main/utils"
-	"strconv"
 )
 
 const (
@@ -23,17 +22,12 @@ func upload(path string, size, ByteLimit int64, headers map[string]string) (stri
 	if err != nil {
 		return "", err
 	}
-	retSize, err := strconv.ParseInt(obj.Files[0].Size, 10, 64)
-	if err != nil {
-		return "", err
-	}
 	if !obj.Success {
 		return "", errors.New("Bad response.")
-	} else if retSize != size {
+	} else if obj.Files[0].Size != size {
 		return "", errors.New("Byte count mismatch.")
 	}
 	return obj.Files[0].URL, nil
-
 }
 
 func Run(args *utils.Args, path string) (string, error) {

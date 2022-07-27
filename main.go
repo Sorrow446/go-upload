@@ -12,6 +12,7 @@ import (
 	"main/hosts/filemail"
 	"main/hosts/ftp"
 	"main/hosts/gofile"
+	"main/hosts/krakenfiles"
 	"main/hosts/megaup"
 	"main/hosts/mixdrop"
 	"main/hosts/pixeldrain"
@@ -35,21 +36,22 @@ const megabyte = 1000000
 
 var (
 	funcMap = map[string]func(*utils.Args, string) (string, error){
-		"anonfiles":  anonfiles.Run,
-		"catbox":     catbox.Run,
-		"fileio":     fileio.Run,
-		"filemail":   filemail.Run,
-		"ftp":        ftp.Run,
-		"gofile":     gofile.Run,
-		"megaup":     megaup.Run,
-		"mixdrop":    mixdrop.Run,
-		"pixeldrain": pixeldrain.Run,
-		"racaty":     racaty.Run,
-		"transfersh": transfersh.Run,
-		"uguu":       uguu.Run,
-		"wetransfer": wetransfer.Run,
-		"zippyshare": zippyshare.Run,
-		"workupload": workupload.Run,
+		"anonfiles":   anonfiles.Run,
+		"catbox":      catbox.Run,
+		"fileio":      fileio.Run,
+		"filemail":    filemail.Run,
+		"ftp":         ftp.Run,
+		"gofile":      gofile.Run,
+		"krakenfiles": krakenfiles.Run,
+		"megaup":      megaup.Run,
+		"mixdrop":     mixdrop.Run,
+		"pixeldrain":  pixeldrain.Run,
+		"racaty":      racaty.Run,
+		"transfersh":  transfersh.Run,
+		"uguu":        uguu.Run,
+		"wetransfer":  wetransfer.Run,
+		"zippyshare":  zippyshare.Run,
+		"workupload":  workupload.Run,
 	}
 	templateEscPairs = []utils.TemplateEscPair{
 		// Newline

@@ -62,6 +62,7 @@ Vars: filename, filePath, fileUrl
 |FTP|ftp|-
 |[Gofile](https://gofile.io/)|gofile|unlim
 |[KrakenFiles](https://krakenfiles.com/)|krakenfiles|1 GB
+|[LetsUpload](https://letsupload.io/)|letsupload|10 GB
 |[MegaUp](https://megaup.net/)|megaup|5 GB
 |[MixDrop](https://mixdrop.co/)|mixdrop|unlim
 |[pixeldrain](https://pixeldrain.com/)|pixeldrain|10 GB

@@ -67,18 +67,17 @@ func upload(uploadUrl, path string, size, byteLimit int64, headers, formMap map[
 	if err != nil {
 		return "", err
 	}
-	if respBody != nil {
-		defer respBody.Close()
-	}
+	defer respBody.Close()
 	var obj UploadResp
 	err = json.NewDecoder(respBody).Decode(&obj)
 	if err != nil {
 		return "", err
 	}
-	if obj.Files[0].Size != size {
+	file := obj.Files[0]
+	if file.Size != size {
 		return "", errors.New("Byte count mismatch.")
 	}
-	return referer + "file/" + obj.Files[0].Key, nil
+	return referer + "file/" + file.Key, nil
 }
 
 func finalise(headers, postMap map[string]string) error {

@@ -1,11 +1,11 @@
 module main
 
-go 1.17
+go 1.18
 
 require (
 	github.com/alexflint/go-arg v1.4.3
 	github.com/dustin/go-humanize v1.0.0
-	github.com/jlaffaye/ftp v0.0.0-20220524001917-dfa1e758f3af
+	github.com/jlaffaye/ftp v0.1.0
 )
 
 require (

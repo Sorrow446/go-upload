@@ -20,7 +20,7 @@ func getUploadUrl() (string, error) {
 	if match == nil {
 		return "", errors.New("No regex match.")
 	}
-	return "https:" + match[1], nil
+	return match[1], nil
 }
 func upload(uploadUrl, path string, size, ByteLimit int64, headers map[string]string) (string, error) {
 	respBody, err := utils.MultipartUpload(uploadUrl, path, "files[]", size, ByteLimit, nil, nil, headers)
